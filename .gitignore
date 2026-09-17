@@ -11,6 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+.env
+
+# Personal getting started guide
+GETTING_STARTED.md
 
 # Editor directories and files
 .vscode/*
