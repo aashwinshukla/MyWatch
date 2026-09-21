@@ -22,16 +22,14 @@ function watchlistReducer(state, action) {
       return [...state, action.payload];
 
     case ACTIONS.REMOVE_FROM_WATCHLIST:
-        return [...state, action.payload];
+      return state.filter(item => item.imdbID !== action.payload);
 
     case ACTIONS.TOGGLE_WATCHED:
-        return action.payload;
-    
-    // TODO: Implement REMOVE_FROM_WATCHLIST
-    // Filter out the item with matching imdbID
-
-    // TODO: Implement TOGGLE_WATCHED
-    // Map through state, find matching imdbID, toggle its 'watched' property
+      return state.map(item =>
+        item.imdbID === action.payload
+          ? { ...item, watched: !item.watched }
+          : item
+      );
 
     default:
       return state;
