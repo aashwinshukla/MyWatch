@@ -4,16 +4,15 @@ import logo from '../../assets/MyWatch-logo.png';
 function Header() {
   return (
     <header className="sticky top-0 z-50 bg-zinc-900 border-b border-zinc-800">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div className="relative max-w-7xl mx-auto px-2 py-3 flex items-center justify-between">
 
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="MyWatch" className="h-8 w-8 object-contain" />
-          <span className="text-white font-bold text-xl tracking-tight">MyWatch</span>
+        <Link to="/" className="flex items-center flex-shrink-0">
+          <img src={logo} alt="MyWatch" className="h-22 w-55 object-contain" />
         </Link>
 
-        {/* Nav links - hidden on mobile */}
-        <nav className="hidden md:flex items-center gap-6">
+        {/* Nav links - centered */}
+        <nav className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
           <Link to="/" className="text-zinc-400 hover:text-white transition-colors text-sm font-medium">
             Home
           </Link>

@@ -1,7 +1,9 @@
+import Header from './components/layout/Header';
+
 function App() {
   return (
     <div>
-      <h1>MyWatch</h1>
+      <Header />
     </div>
   )
 }
