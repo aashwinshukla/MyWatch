@@ -27,15 +27,11 @@ MyWatch is a personal movie and TV show tracker. You find something you want to 
 These are the calls we're making upfront so we don't revisit them every other day:
 
 - **Frontend**: React (JavaScript) — no TypeScript, just plain JS
-- **Styling**: Plain CSS with custom properties (CSS variables) for theming — no utility frameworks
+- **Styling**: Tailwind CSS — utility-first CSS framework
 - **State Management**: React Context + useReducer — built-in, no extra dependencies needed
 - **Local Storage**: localStorage with a thin wrapper so we can swap it for a DB later without touching everything
-- **Movie Data API**: TMDB (The Movie Database) — free tier, solid docs, massive catalog
+- **Movie Data API**: OMDb (The Movie Database) — free tier, solid docs, massive catalog
 - **Routing**: React Router v6
-
-### Why plain CSS and not a framework?
-
-Full control. No class-name soup in the JSX, no fighting a framework's opinion on spacing. We write the styles we mean, organized in module-level CSS files, and we own every pixel.
 
 ---
 
@@ -113,26 +109,19 @@ All calls go through a base fetch wrapper that attaches the API key and handles 
 ```
 src/
 ├── api/
-│   └── tmdb.js              # all TMDB calls live here
+│   └── omdb.js              # all OMDb calls live here
 ├── components/
 │   ├── ui/                  # buttons, cards, badges, inputs — reusable pieces
 │   │   ├── MovieCard.jsx
-│   │   ├── MovieCard.css
-│   │   ├── SearchBar.jsx
-│   │   └── SearchBar.css
+│   │   └── SearchBar.jsx
 │   └── layout/              # header, nav, page wrapper
 │       ├── Header.jsx
-│       ├── Header.css
 │       └── PageWrapper.jsx
 ├── pages/
 │   ├── Home.jsx
-│   ├── Home.css
 │   ├── Search.jsx
-│   ├── Search.css
 │   ├── Watchlist.jsx
-│   ├── Watchlist.css
-│   ├── TitleDetail.jsx
-│   └── TitleDetail.css
+│   └── TitleDetail.jsx
 ├── context/
 │   └── WatchlistContext.jsx  # React Context + useReducer for watchlist state
 ├── hooks/
@@ -141,35 +130,7 @@ src/
     └── storage.js            # localStorage read/write helpers
 ```
 
-Each component owns its CSS file — no global stylesheet doing heavy lifting except for resets and CSS variables.
-
----
-
-## CSS Architecture
-
-We'll use a single `index.css` at the root for:
-- CSS reset
-- CSS custom properties (colors, font sizes, spacing scale, border radii)
-- Base typography
-
-Everything else is scoped to its component's CSS file. This keeps styles predictable and easy to debug.
-
-```css
-/* Example variables in index.css */
-:root {
-  --color-bg: #0f0f0f;
-  --color-surface: #1a1a1a;
-  --color-accent: #e50914;      /* classic watchlist red */
-  --color-text: #f0f0f0;
-  --color-text-muted: #888;
-  --radius-card: 8px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 32px;
-}
-```
-
-Dark theme by default — this is a movie app, it should feel like a theater.
+All styling is done with Tailwind utility classes directly in JSX — no separate CSS files needed.
 
 ---
 
