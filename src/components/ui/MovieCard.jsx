@@ -17,30 +17,45 @@ function MovieCard({ movie }) {
 
   return (
     <div
-      className="cursor-pointer"
+      className="bg-zinc-800 rounded-lg overflow-hidden cursor-pointer hover:scale-105 hover:shadow-xl transition-transform duration-200 flex flex-col"
       onClick={() => navigate(`/title/${movie.imdbID}`)}
     >
       {/* Poster */}
       {movie.Poster !== 'N/A' ? (
-        <img src={movie.Poster} alt={movie.Title} />
+        <img
+          src={movie.Poster}
+          alt={movie.Title}
+          className="w-full aspect-2/3 object-cover"
+        />
       ) : (
-        <div>No Image</div>
+        <div className="w-full aspect-2/3 bg-zinc-700 flex items-center justify-center text-zinc-400 text-sm">
+          No Image
+        </div>
       )}
 
       {/* Info */}
-      <h2>{movie.Title}</h2>
-      <p>{movie.Year}</p>
-      <p>{movie.Type}</p>
+      <div className="p-3 flex flex-col gap-1 flex-1">
+        <h2 className="text-white text-sm font-semibold line-clamp-2">{movie.Title}</h2>
+        <div className="flex items-center gap-2 mt-1">
+          <span className="text-zinc-400 text-xs">{movie.Year}</span>
+          <span className="text-xs bg-zinc-700 text-zinc-300 px-2 py-0.5 rounded-full capitalize">{movie.Type}</span>
+        </div>
 
-      {/* Add / Remove button */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation(); // prevent card click from firing
-          inWatchlist ? handleRemove() : handleAdd();
-        }}
-      >
-        {inWatchlist ? 'Remove' : 'Add to Watchlist'}
-      </button>
+        {/* Add / Remove button */}
+        <button
+          className={`mt-auto pt-3 text-xs font-medium py-1.5 rounded-md transition-colors ${
+            inWatchlist
+              ? 'bg-zinc-600 hover:bg-red-600 text-white'
+              : 'bg-red-600 hover:bg-red-700 text-white'
+          }`}
+          onClick={(e) => {
+            e.stopPropagation();
+            inWatchlist ? handleRemove() : handleAdd();
+          }}
+        >
+          {inWatchlist ? 'Remove' : '+ Watchlist'}
+        </button>
+      </div>
     </div>
   );
 }
