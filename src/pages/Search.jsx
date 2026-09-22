@@ -1,20 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SearchBar from '../components/ui/SearchBar';
 import PageWrapper from '../components/layout/PageWrapper';
 import { searchMovies } from '../api/omdb';
 import MovieCard from '../components/ui/MovieCard';
+import { getRandomQuery } from '../utils/randomQuery';
 
 function Search() {
   const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(false); // false by default — nothing searched yet
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [query, setQuery] = useState(''); // tracks what the user searched
+  const [query, setQuery] = useState('');
 
-  // This runs when SearchBar calls onSearch with a new query
+  // Load random movies on mount
+  useEffect(() => {
+    searchMovies(getRandomQuery()).then(results => {
+      if (results && results.length > 0) setMovies(results);
+      setLoading(false);
+    });
+  }, []);
+
   const handleSearch = async (searchQuery) => {
-    // If query is empty, clear results and stop
     if (!searchQuery) {
-      setMovies([]);
+      setQuery('');
+      setLoading(true);
+      const results = await searchMovies(getRandomQuery());
+      if (results && results.length > 0) setMovies(results);
+      setLoading(false);
       return;
     }
 
@@ -38,21 +49,14 @@ function Search() {
     <PageWrapper>
       <SearchBar onSearch={handleSearch} />
 
-      {/* Loading state */}
       {loading && <div className="text-white text-center mt-20">Loading...</div>}
-
-      {/* Error state */}
       {error && <div className="text-red-500 text-center mt-10">{error}</div>}
 
-      {/* Empty state - before any search */}
-      {!loading && !error && movies.length === 0 && !query && (
-        <div className="text-zinc-400 text-center mt-20">Type something to search...</div>
-      )}
-
-      {/* Results */}
       {!loading && movies.length > 0 && (
         <>
-          <h1 className="text-white text-2xl font-bold my-6">Results for "{query}"</h1>
+          <h1 className="text-white text-2xl font-bold my-6">
+            {query ? `Results for "${query}"` : 'Discover'}
+          </h1>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {movies.map(movie => (
               <MovieCard key={movie.imdbID} movie={movie} />

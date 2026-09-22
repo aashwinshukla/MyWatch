@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { searchMovies } from '../api/omdb';
 import MovieCard from '../components/ui/MovieCard';
 import PageWrapper from '../components/layout/PageWrapper';
+import { getRandomQuery } from '../utils/randomQuery';
 
 function Home() {
   const [movies, setMovies] = useState([]);
@@ -9,7 +10,7 @@ function Home() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    searchMovies('beautiful').then(results => {
+    searchMovies(getRandomQuery()).then(results => {
       if (!results || results.length === 0) {
         setError('Failed to load movies');
       } else {
