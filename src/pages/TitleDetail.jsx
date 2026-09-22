@@ -52,25 +52,27 @@ function TitleDetail() {
   const isWatched = watchlist.find(item => item.imdbID === imdbID)?.watched;
 
   return (
-    <div className="relative min-h-screen bg-zinc-950">
+    <div className="relative min-h-screen">
 
       {/* ── Background poster layer ── */}
-      {/* This sits behind everything, covers the top portion of the screen */}
-      <div className="absolute inset-0 h-[70vh] overflow-hidden">
-        <img
-          src={movie.Poster !== 'N/A' ? movie.Poster : ''}
-          alt={movie.Title}
-          className="w-full h-full object-cover object-top scale-105"
-        />
-        {/* Blur overlay — gets stronger towards the bottom */}
-        <div className="absolute inset-0 backdrop-blur-sm bg-black/30" />
-        {/* Gradient fade into the info card below */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/60 to-zinc-950" />
+      <div className="fixed inset-x-0 top-0 h-[85vh] -z-10">
+        {/* Poster image */}
+        {movie.Poster !== 'N/A' && (
+          <img
+            src={movie.Poster}
+            alt=""
+            className="w-full h-full object-cover object-top"
+          />
+        )}
+        {/* Dark tint so text is readable */}
+        <div className="absolute inset-0 bg-black/50" />
+        {/* Fade to dark at the bottom where the card starts */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/40 to-zinc-950" />
       </div>
 
       {/* ── Info card layer ── */}
       {/* Sits on top of the poster, starts partway down, like a document coming out of a folder */}
-      <div className="relative z-10 mt-[35vh] mx-auto max-w-4xl bg-zinc-900 rounded-t-3xl shadow-2xl px-8 pt-8 pb-16 min-h-[65vh]">
+      <div className="relative z-10 mt-[45vh] mx-4 md:mx-auto max-w-4xl bg-zinc-900/70 backdrop-blur-md rounded-3xl shadow-2xl px-8 pt-8 pb-16 min-h-[65vh] mb-10">
 
         {/* Poster thumbnail + title side by side */}
         <div className="flex gap-6 -mt-20 mb-6">
