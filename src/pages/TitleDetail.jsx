@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getDetails } from '../api/omdb';
 import { getBackdrop } from '../api/tmdb';
 import { useWatchlist } from '../context/WatchlistContext';
@@ -11,7 +11,6 @@ function TitleDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const navigate = useNavigate();
   const { watchlist, dispatch, ACTIONS } = useWatchlist();
   const inWatchlist = watchlist.some(item => item.imdbID === imdbID);
 
@@ -74,14 +73,6 @@ function TitleDetail() {
 
       {/* ── Info card ── */}
       <div className="relative z-10 mt-[45vh] mx-4 md:mx-auto max-w-4xl bg-zinc-900/70 backdrop-blur-md rounded-3xl shadow-2xl px-8 pt-4 pb-16 min-h-[65vh] mb-10">
-
-        {/* Back button */}
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-sm mb-4"
-        >
-          ← Back
-        </button>
 
         {/* Poster + title */}
         <div className="flex gap-6 -mt-16 mb-6">

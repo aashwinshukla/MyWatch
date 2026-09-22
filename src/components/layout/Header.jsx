@@ -1,18 +1,32 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../assets/MyWatch-logo.png';
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const isDetailPage = location.pathname.startsWith('/title/');
 
   return (
     <header className="sticky top-0 z-50 bg-zinc-900 border-b border-zinc-800">
       <div className="relative max-w-7xl mx-auto px-2 py-3 flex items-center justify-between">
 
         {/* Logo */}
-        <Link to="/" className="flex items-center shrink-0">
-          <img src={logo} alt="MyWatch" className="h-22 w-55 object-contain" />
-        </Link>
+        <div className="flex items-center gap-3 flex-shrink-0">
+          {isDetailPage && (
+            <button
+              onClick={() => navigate(-1)}
+              className="text-zinc-400 hover:text-white transition-colors text-sm font-medium flex items-center gap-1"
+            >
+              ← Back
+            </button>
+          )}
+          <Link to="/" className="flex items-center">
+            <img src={logo} alt="MyWatch" className="h-22 w-55 object-contain" />
+          </Link>
+        </div>
 
         {/* Nav links - centered */}
         <nav className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
