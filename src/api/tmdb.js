@@ -1,8 +1,16 @@
 // TMDB — used only for HD backdrop images
 
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+const ACCESS_TOKEN = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
 const BASE_URL = 'https://api.themoviedb.org/3';
-const IMG_BASE = 'https://image.tmdb.org/t/p/w1280';
+const IMG_BASE = 'https://image.tmdb.org/t/p/original';
+
+const options = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: `Bearer ${ACCESS_TOKEN}`,
+  },
+};
 
 /**
  * Search TMDB by title and return the HD backdrop image URL
@@ -12,7 +20,8 @@ const IMG_BASE = 'https://image.tmdb.org/t/p/w1280';
 export async function getBackdrop(title) {
   try {
     const response = await fetch(
-      `${BASE_URL}/search/multi?query=${encodeURIComponent(title)}&api_key=${API_KEY}`
+      `${BASE_URL}/search/multi?query=${encodeURIComponent(title)}`,
+      options
     );
 
     if (!response.ok) return null;
