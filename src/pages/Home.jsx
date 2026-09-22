@@ -9,28 +9,27 @@ function Home() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // fetch on mount
-    searchMovies('something').then(results => {
-      setMovies(results);
+    searchMovies('beautiful').then(results => {
+      if (!results || results.length === 0) {
+        setError('Failed to load movies');
+      } else {
+        setMovies(results);
+      }
       setLoading(false);
     });
-  }, []); // empty array = only runs once when component mounts
+  }, []);
 
-  // loading state
-  if (loading) return <div>Loading...</div>;
-
-  // error state
-  if (error) return <div>Something went wrong</div>;
+  if (loading) return <div className="text-white text-center mt-20">Loading...</div>;
+  if (error) return <div className="text-red-500 text-center mt-20">{error}</div>;
 
   return (
     <PageWrapper>
-      {
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            {movies.map(movie => (
-              <MovieCard key={movie.imdbID} movie={movie} />
-            ))}
-        </div>
-      }
+      <h1 className="text-white text-2xl font-bold mb-6">Popular Movies</h1>
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        {movies.map(movie => (
+          <MovieCard key={movie.imdbID} movie={movie} />
+        ))}
+      </div>
     </PageWrapper>
   );
 }
