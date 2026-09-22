@@ -73,18 +73,18 @@ function TitleDetail() {
       </div>
 
       {/* ── Info card ── */}
-      <div className="relative z-10 mt-[45vh] mx-4 md:mx-auto max-w-4xl bg-zinc-900/70 backdrop-blur-md rounded-3xl shadow-2xl px-8 pt-8 pb-16 min-h-[65vh] mb-10">
+      <div className="relative z-10 mt-[45vh] mx-4 md:mx-auto max-w-4xl bg-zinc-900/70 backdrop-blur-md rounded-3xl shadow-2xl px-8 pt-4 pb-16 min-h-[65vh] mb-10">
 
         {/* Back button */}
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-sm mb-6"
+          className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-sm mb-4"
         >
           ← Back
         </button>
 
         {/* Poster + title */}
-        <div className="flex gap-6 -mt-20 mb-6">
+        <div className="flex gap-6 -mt-16 mb-6">
           <img
             src={movie.Poster !== 'N/A' ? movie.Poster : ''}
             alt={movie.Title}
