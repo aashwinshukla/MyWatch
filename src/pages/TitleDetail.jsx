@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getDetails } from '../api/omdb';
+import { getBackdrop } from '../api/tmdb';
 import { useWatchlist } from '../context/WatchlistContext';
 
 function TitleDetail() {
   const { imdbID } = useParams();
   const [movie, setMovie] = useState(null);
+  const [backdrop, setBackdrop] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -16,10 +18,14 @@ function TitleDetail() {
     getDetails(imdbID).then(data => {
       if (!data) {
         setError('Movie not found');
+        setLoading(false);
       } else {
         setMovie(data);
+        getBackdrop(data.Title).then(url => {
+          setBackdrop(url);
+          setLoading(false);
+        });
       }
-      setLoading(false);
     });
   }, [imdbID]);
 
@@ -54,35 +60,27 @@ function TitleDetail() {
   return (
     <div className="relative min-h-screen">
 
-      {/* ── Background poster layer ── */}
+      {/* ── Background layer — HD backdrop from TMDB, falls back to OMDb poster ── */}
       <div className="fixed inset-x-0 top-0 h-[85vh] -z-10">
-        {/* Poster image */}
-        {movie.Poster !== 'N/A' && (
-          <img
-            src={movie.Poster}
-            alt=""
-            className="w-full h-full object-cover object-top"
-          />
-        )}
-        {/* Dark tint so text is readable */}
+        <img
+          src={backdrop || (movie.Poster !== 'N/A' ? movie.Poster : '')}
+          alt=""
+          className="w-full h-full object-cover object-top"
+        />
         <div className="absolute inset-0 bg-black/50" />
-        {/* Fade to dark at the bottom where the card starts */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/40 to-zinc-950" />
       </div>
 
-      {/* ── Info card layer ── */}
-      {/* Sits on top of the poster, starts partway down, like a document coming out of a folder */}
+      {/* ── Info card ── */}
       <div className="relative z-10 mt-[45vh] mx-4 md:mx-auto max-w-4xl bg-zinc-900/70 backdrop-blur-md rounded-3xl shadow-2xl px-8 pt-8 pb-16 min-h-[65vh] mb-10">
 
-        {/* Poster thumbnail + title side by side */}
+        {/* Poster + title */}
         <div className="flex gap-6 -mt-20 mb-6">
-          {/* Small poster sticking up above the card */}
           <img
             src={movie.Poster !== 'N/A' ? movie.Poster : ''}
             alt={movie.Title}
             className="w-32 h-48 object-cover rounded-xl shadow-2xl flex-shrink-0 border-2 border-zinc-700"
           />
-          {/* Title and meta */}
           <div className="pt-10 flex flex-col justify-end">
             <h1 className="text-white text-3xl font-bold leading-tight">{movie.Title}</h1>
             <div className="flex flex-wrap items-center gap-3 mt-2">
