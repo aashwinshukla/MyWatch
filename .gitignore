@@ -15,7 +15,10 @@ dist-ssr
 
 # Personal getting started guide
 GETTING_STARTED.md
+COMPLETED.md
+PHASE_1.md
 PHASE_2.md
+PHASE_3.md
 
 # Editor directories and files
 .vscode/*

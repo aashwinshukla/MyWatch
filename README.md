@@ -1,16 +1,101 @@
-# React + Vite
+# MyWatch 🎬
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personal movie and TV show tracker built with React, Tailwind CSS, and the OMDb/TMDB APIs.
 
-Currently, two official plugins are available:
+**Live Demo:** [mywatch.vercel.app](https://your-vercel-url.vercel.app)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🔍 **Search** movies and TV shows
+- 📝 **Watchlist** with add/remove/mark watched
+- 💬 **Personal notes** for each title
+- ✅ **Watched badge** on completed movies
+- 🎨 **HD backdrop images** on detail pages
+- 📱 **Fully responsive** (desktop, tablet, mobile)
+- ⌨️ **Keyboard shortcuts** (press `/` to search)
+- 🔗 **Share links** to movies
+- 🎯 **Filter & sort** watchlist by type, status, year, title
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Quick Start
+
+```bash
+# Clone the repo
+git clone https://github.com/yourusername/MyWatch.git
+
+# Install dependencies
+npm install
+
+# Create .env file with your API keys
+VITE_OMDB_API_KEY=your_omdb_key
+VITE_TMDB_ACCESS_TOKEN=your_tmdb_token
+
+# Run dev server
+npm run dev
+```
+
+Visit `http://localhost:5173`
+
+---
+
+## 📚 Documentation
+
+- **[PHASE_1.md](./PHASE_1.md)** — Original project spec & foundation goals
+- **[GETTING_STARTED.md](./GETTING_STARTED.md)** — Phase 1 polish checklist
+- **[PHASE_2.md](./PHASE_2.md)** — Planned features roadmap
+- **[COMPLETED.md](./COMPLETED.md)** — Full list of completed features
+- **[PHASE_3.md](./PHASE_3.md)** — Next features to build
+
+---
+
+## 🛠️ Built With
+
+- **React** — UI framework
+- **Tailwind CSS** — Styling
+- **React Router** — Navigation
+- **OMDb API** — Movie data
+- **TMDB API** — HD backdrop images
+- **Vite** — Build tool
+- **Vercel** — Deployment
+
+---
+
+## 📸 Screenshots
+
+*(Add screenshots here later)*
+
+---
+
+## 🗺️ Project Status
+
+**Current Phase:** Phase 2 Complete ✅  
+**Next Up:** Phase 3 — Toast notifications, statistics, advanced features
+
+See [PHASE_3.md](./PHASE_3.md) for the full roadmap.
+
+---
+
+## 🤝 Contributing
+
+This is a learning project, but suggestions and feedback are welcome!
+
+---
+
+## 📄 License
+
+MIT License — See [LICENSE](./LICENSE)
+
+---
+
+## 🙏 Acknowledgments
+
+- Movie data provided by [OMDb API](http://www.omdbapi.com/)
+- Backdrop images from [TMDB](https://www.themoviedb.org/)
+- Built for learning purposes only
+
+---
+
+**Built with ❤️ and lots of coffee**
