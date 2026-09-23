@@ -103,7 +103,7 @@ function TitleDetail() {
           className="w-full h-full object-cover object-top"
         />
         <div className="absolute inset-0 bg-black/50" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/40 to-zinc-950" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/10 via-black/40 to-zinc-950" />
       </div>
 
       {/* ── Info card ── */}
@@ -114,7 +114,7 @@ function TitleDetail() {
           <img
             src={movie.Poster !== 'N/A' ? movie.Poster : ''}
             alt={movie.Title}
-            className="w-32 h-48 object-cover rounded-xl shadow-2xl flex-shrink-0 border-2 border-zinc-700"
+            className="w-32 h-48 object-cover rounded-xl shadow-2xl shrink-0 border-2 border-zinc-700"
           />
           <div className="md:pt-10 flex flex-col justify-end text-center md:text-left">
             <h1 className="text-white text-3xl font-bold leading-tight">{movie.Title}</h1>

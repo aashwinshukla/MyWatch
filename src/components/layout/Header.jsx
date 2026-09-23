@@ -20,7 +20,7 @@ function Header() {
       <div className="relative max-w-7xl mx-auto px-2 py-3 flex items-center justify-between">
 
         {/* Logo */}
-        <div className="flex items-center gap-3 flex-shrink-0">
+        <div className="flex items-center gap-3 shrink-0">
           {isDetailPage && (
             <button
               onClick={() => navigate(-1)}
@@ -67,7 +67,7 @@ function Header() {
           >
             <span>Watchlist</span>
             {totalCount > 0 && (
-              <span className="bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full min-w-[20px] text-center">
+              <span className="bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full min-w-5 text-center">
                 {totalCount}
               </span>
             )}
@@ -139,7 +139,7 @@ function Header() {
           >
             <span>Watchlist</span>
             {totalCount > 0 && (
-              <span className="bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full min-w-[20px] text-center">
+              <span className="bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full min-w-5 text-center">
                 {totalCount}
               </span>
             )}
