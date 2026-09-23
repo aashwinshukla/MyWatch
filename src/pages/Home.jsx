@@ -43,10 +43,8 @@ function Home() {
   }, []);
 
   const handleSearch = (query) => {
-    // Navigate to search page with the query
-    if (query) {
-      navigate(`/search?q=${encodeURIComponent(query)}`);
-    }
+    // Navigate to search page
+    navigate('/search');
   };
 
   if (loading) return <PageWrapper><LoadingSpinner /></PageWrapper>;
