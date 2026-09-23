@@ -8,6 +8,11 @@ import { getRandomQuery } from '../utils/randomQuery';
 const STORAGE_KEY = 'search_state';
 
 function Search() {
+
+  useEffect(() => {
+    document.title = 'Search — MyWatch';
+  }, []);
+
   // Initialize state from sessionStorage if available
   const getSavedState = () => {
     const savedState = sessionStorage.getItem(STORAGE_KEY);

@@ -10,6 +10,10 @@ function Home() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    document.title = 'Home — MyWatch';
+  }, []);
+
+  useEffect(() => {
     searchMovies(getRandomQuery()).then(results => {
       if (!results || results.length === 0) {
         setError('Failed to load movies');

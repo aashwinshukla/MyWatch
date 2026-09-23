@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useWatchlist } from '../context/WatchlistContext';
 import MovieCard from '../components/ui/MovieCard';
 import PageWrapper from '../components/layout/PageWrapper';
@@ -7,6 +7,10 @@ function Watchlist() {
   const { watchlist } = useWatchlist();
   const [filter, setFilter] = useState('all'); // all, movie, series, watched, unwatched
   const [sort, setSort] = useState('newest'); // newest, oldest, recentlyAdded, firstAdded, title
+
+  useEffect(() => {
+    document.title = 'Watchlist — MyWatch';
+  }, []);
 
   // Apply filter
   const filtered = watchlist.filter(item => {

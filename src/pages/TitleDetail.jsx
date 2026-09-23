@@ -14,6 +14,10 @@ function TitleDetail() {
   const { watchlist, dispatch, ACTIONS } = useWatchlist();
   const inWatchlist = watchlist.some(item => item.imdbID === imdbID);
 
+
+  useEffect(() => {
+    document.title = 'Title — MyWatch';
+  }, []);
   useEffect(() => {
     getDetails(imdbID).then(data => {
       if (!data) {
