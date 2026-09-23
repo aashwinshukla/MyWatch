@@ -110,15 +110,15 @@ function TitleDetail() {
       <div className="relative z-10 mt-[45vh] mx-4 md:mx-auto max-w-4xl bg-zinc-900/70 backdrop-blur-md rounded-3xl shadow-2xl px-8 pt-4 pb-16 min-h-[65vh] mb-10">
 
         {/* Poster + title */}
-        <div className="flex gap-6 -mt-16 mb-6">
+        <div className="flex flex-col md:flex-row gap-6 items-center md:items-end -mt-16 mb-6">
           <img
             src={movie.Poster !== 'N/A' ? movie.Poster : ''}
             alt={movie.Title}
             className="w-32 h-48 object-cover rounded-xl shadow-2xl flex-shrink-0 border-2 border-zinc-700"
           />
-          <div className="pt-10 flex flex-col justify-end">
+          <div className="md:pt-10 flex flex-col justify-end text-center md:text-left">
             <h1 className="text-white text-3xl font-bold leading-tight">{movie.Title}</h1>
-            <div className="flex flex-wrap items-center gap-3 mt-2">
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 mt-2">
               <span className="text-zinc-400 text-sm">{movie.Year}</span>
               <span className="text-zinc-400 text-sm">•</span>
               <span className="text-zinc-400 text-sm">{movie.Runtime}</span>
@@ -213,7 +213,7 @@ function TitleDetail() {
         )}
 
         {/* Details grid */}
-        <div className="grid grid-cols-2 gap-4 border-t border-zinc-800 pt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-zinc-800 pt-6">
           {[
             { label: 'Director', value: movie.Director },
             { label: 'Writer', value: movie.Writer },
