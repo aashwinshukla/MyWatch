@@ -14,14 +14,28 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    searchMovies(getRandomQuery()).then(results => {
-      if (!results || results.length === 0) {
+    const loadMultipleSearches = async () => {
+      const queries = [getRandomQuery(), getRandomQuery(), getRandomQuery()];
+      const allResults = [];
+      
+      for (const query of queries) {
+        const results = await searchMovies(query);
+        if (results && results.length > 0) {
+          allResults.push(...results);
+        }
+      }
+      
+      if (allResults.length === 0) {
         setError('Failed to load movies');
       } else {
-        setMovies(results);
+        // Remove duplicates by imdbID and limit to 25 movies
+        const unique = Array.from(new Map(allResults.map(m => [m.imdbID, m])).values()).slice(0, 25);
+        setMovies(unique);
       }
       setLoading(false);
-    });
+    };
+    
+    loadMultipleSearches();
   }, []);
 
   if (loading) return <div className="text-white text-center mt-20">Loading...</div>;
