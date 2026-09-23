@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Search from './pages/Search';
 import Watchlist from './pages/Watchlist';
 import TitleDetail from './pages/TitleDetail';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/watchlist" element={<Watchlist />} />
           <Route path="/title/:imdbID" element={<TitleDetail />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />
