@@ -12,6 +12,7 @@ function TitleDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [noteText, setNoteText] = useState('');
+  const [copied, setCopied] = useState(false);
 
   const { watchlist, dispatch, ACTIONS } = useWatchlist();
   const inWatchlist = watchlist.some(item => item.imdbID === imdbID);
@@ -74,6 +75,16 @@ function TitleDetail() {
       type: ACTIONS.UPDATE_NOTE,
       payload: { imdbID, note: noteText }
     });
+  };
+
+  const handleShareLink = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
+    } catch (err) {
+      console.error('Failed to copy link:', err);
+    }
   };
 
   if (loading) return <LoadingSpinner />;
@@ -160,6 +171,23 @@ function TitleDetail() {
               {isWatched ? '✓ Watched' : 'Mark as Watched'}
             </button>
           )}
+
+          <button
+            onClick={handleShareLink}
+            className="px-5 py-2 rounded-lg text-sm font-medium transition-colors bg-zinc-700 hover:bg-zinc-600 text-white flex items-center gap-2"
+          >
+            {copied ? (
+              <>
+                <span>✓</span>
+                <span>Copied!</span>
+              </>
+            ) : (
+              <>
+                <span>🔗</span>
+                <span>Share</span>
+              </>
+            )}
+          </button>
         </div>
 
         {/* Personal Note - only show if in watchlist */}
