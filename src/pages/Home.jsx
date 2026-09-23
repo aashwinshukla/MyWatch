@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { searchMovies } from '../api/omdb';
 import MovieCard from '../components/ui/MovieCard';
 import PageWrapper from '../components/layout/PageWrapper';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 import { getRandomQuery } from '../utils/randomQuery';
 
 function Home() {
@@ -38,8 +39,8 @@ function Home() {
     loadMultipleSearches();
   }, []);
 
-  if (loading) return <div className="text-white text-center mt-20">Loading...</div>;
-  if (error) return <div className="text-red-500 text-center mt-20">{error}</div>;
+  if (loading) return <PageWrapper><LoadingSpinner /></PageWrapper>;
+  if (error) return <PageWrapper><div className="text-red-500 text-center mt-20">{error}</div></PageWrapper>;
 
   return (
     <PageWrapper>

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getDetails } from '../api/omdb';
 import { getBackdrop } from '../api/tmdb';
 import { useWatchlist } from '../context/WatchlistContext';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 
 function TitleDetail() {
   const { imdbID } = useParams();
@@ -56,7 +57,7 @@ function TitleDetail() {
     dispatch({ type: ACTIONS.TOGGLE_WATCHED, payload: imdbID });
   };
 
-  if (loading) return <div className="text-white text-center mt-20">Loading...</div>;
+  if (loading) return <LoadingSpinner />;
   if (error) return <div className="text-red-500 text-center mt-20">{error}</div>;
 
   const isWatched = watchlist.find(item => item.imdbID === imdbID)?.watched;

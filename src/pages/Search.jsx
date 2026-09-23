@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import SearchBar from '../components/ui/SearchBar';
 import PageWrapper from '../components/layout/PageWrapper';
+import LoadingSpinner from '../components/ui/LoadingSpinner';
 import { searchMovies } from '../api/omdb';
 import MovieCard from '../components/ui/MovieCard';
 import { getRandomQuery } from '../utils/randomQuery';
@@ -75,7 +76,7 @@ function Search() {
     <PageWrapper>
       <SearchBar onSearch={handleSearch} initialQuery={query} />
 
-      {loading && <div className="text-white text-center mt-20">Loading...</div>}
+      {loading && <LoadingSpinner />}
       {error && <div className="text-red-500 text-center mt-10">{error}</div>}
 
       {!loading && movies.length > 0 && (
