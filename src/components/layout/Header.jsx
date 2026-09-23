@@ -35,7 +35,7 @@ function Header() {
             end
             className={({ isActive }) =>
               isActive 
-                ? 'text-white bg-zinc-800 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
+                ? 'text-white bg-blue-500 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
                 : 'text-zinc-400 hover:text-white px-3 py-1.5 transition-colors text-sm font-medium'
             }
           >
@@ -45,7 +45,7 @@ function Header() {
             to="/search"
             className={({ isActive }) =>
               isActive 
-                ? 'text-white bg-zinc-800 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
+                ? 'text-white bg-blue-500  px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
                 : 'text-zinc-400 hover:text-white px-3 py-1.5 transition-colors text-sm font-medium'
             }
           >
@@ -55,7 +55,7 @@ function Header() {
             to="/watchlist"
             className={({ isActive }) =>
               isActive 
-                ? 'text-white bg-zinc-800 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
+                ? 'text-white bg-blue-500  px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
                 : 'text-zinc-400 hover:text-white px-3 py-1.5 transition-colors text-sm font-medium'
             }
           >
@@ -99,7 +99,7 @@ function Header() {
             end
             className={({ isActive }) =>
               isActive 
-                ? 'text-white bg-zinc-800 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
+                ? 'text-white bg-blue-500  px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
                 : 'text-zinc-400 hover:text-white transition-colors text-sm font-medium'
             }
             onClick={() => setMenuOpen(false)}
@@ -110,7 +110,7 @@ function Header() {
             to="/search"
             className={({ isActive }) =>
               isActive 
-                ? 'text-white bg-zinc-800 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
+                ? 'text-white bg-blue-500  px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
                 : 'text-zinc-400 hover:text-white transition-colors text-sm font-medium'
             }
             onClick={() => setMenuOpen(false)}
@@ -121,7 +121,7 @@ function Header() {
             to="/watchlist"
             className={({ isActive }) =>
               isActive 
-                ? 'text-white bg-zinc-800 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
+                ? 'text-white bg-blue-500  px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
                 : 'text-zinc-400 hover:text-white transition-colors text-sm font-medium'
             }
             onClick={() => setMenuOpen(false)}
