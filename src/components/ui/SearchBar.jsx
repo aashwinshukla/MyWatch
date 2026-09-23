@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useDebounce } from '../../hooks/useDebounce';
 
-function SearchBar({ onSearch }) {
-  const [query, setQuery] = useState('');
+function SearchBar({ onSearch, initialQuery = '' }) {
+  const [query, setQuery] = useState(initialQuery);
   const debouncedQuery = useDebounce(query, 500);
+
+  // Update local state if initialQuery changes
+  useEffect(() => {
+    setQuery(initialQuery);
+  }, [initialQuery]);
 
   // Fires only when user stops typing
   useEffect(() => {

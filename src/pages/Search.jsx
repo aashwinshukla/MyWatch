@@ -8,23 +8,24 @@ import { getRandomQuery } from '../utils/randomQuery';
 const STORAGE_KEY = 'search_state';
 
 function Search() {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [query, setQuery] = useState('');
-
-  // Restore search state or load random movies on mount
-  useEffect(() => {
+  // Initialize state from sessionStorage if available
+  const getSavedState = () => {
     const savedState = sessionStorage.getItem(STORAGE_KEY);
-    
     if (savedState) {
-      // Restore previous search
-      const { query: savedQuery, movies: savedMovies } = JSON.parse(savedState);
-      setQuery(savedQuery);
-      setMovies(savedMovies);
-      setLoading(false);
-    } else {
-      // Load random movies
+      return JSON.parse(savedState);
+    }
+    return { query: '', movies: [] };
+  };
+
+  const savedState = getSavedState();
+  const [movies, setMovies] = useState(savedState.movies);
+  const [loading, setLoading] = useState(savedState.movies.length === 0);
+  const [error, setError] = useState(null);
+  const [query, setQuery] = useState(savedState.query);
+
+  // Load random movies on mount only if no saved state
+  useEffect(() => {
+    if (movies.length === 0) {
       searchMovies(getRandomQuery()).then(results => {
         if (results && results.length > 0) setMovies(results);
         setLoading(false);
@@ -67,7 +68,7 @@ function Search() {
 
   return (
     <PageWrapper>
-      <SearchBar onSearch={handleSearch} />
+      <SearchBar onSearch={handleSearch} initialQuery={query} />
 
       {loading && <div className="text-white text-center mt-20">Loading...</div>}
       {error && <div className="text-red-500 text-center mt-10">{error}</div>}
