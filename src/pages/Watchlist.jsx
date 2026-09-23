@@ -82,7 +82,11 @@ function Watchlist() {
 
       {/* Empty state */}
       {watchlist.length === 0 && (
-        <div className="text-zinc-400 text-center mt-20">Your watchlist is empty — add some movies!</div>
+        <div className="flex flex-col items-center justify-center text-center mt-20">
+          <div className="text-6xl mb-4">🎬</div>
+          <p className="text-zinc-400 text-lg">Your watchlist is empty</p>
+          <p className="text-zinc-500 text-sm mt-2">Add some movies to get started!</p>
+        </div>
       )}
 
       {/* No results after filter */}
