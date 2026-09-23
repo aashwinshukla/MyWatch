@@ -56,14 +56,14 @@ function Watchlist() {
       </div>
 
       {/* Filters and Sort */}
-      <div className="flex flex-wrap items-center gap-4 mb-6">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-col md:flex-row md:flex-wrap items-stretch md:items-center gap-4 mb-6">
+        <div className="flex flex-col md:flex-row md:items-center gap-2 w-full md:w-auto">
           <label htmlFor="filter" className="text-zinc-400 text-sm">Filter</label>
           <select
             id="filter"
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            className="bg-zinc-800 text-white text-sm px-3 py-1.5 rounded-lg border border-zinc-700 focus:outline-none"
+            className="w-full md:w-auto bg-zinc-800 text-white text-sm px-3 py-1.5 rounded-lg border border-zinc-700 focus:outline-none"
           >
             <option value="all">All</option>
             <option value="watched">Watched</option>
@@ -73,13 +73,13 @@ function Watchlist() {
           </select>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-col md:flex-row md:items-center gap-2 w-full md:w-auto">
           <label htmlFor="sort" className="text-zinc-400 text-sm">Sort</label>
           <select
             id="sort"
             value={sort}
             onChange={(e) => setSort(e.target.value)}
-            className="bg-zinc-800 text-white text-sm px-3 py-1.5 rounded-lg border border-zinc-700 focus:outline-none"
+            className="w-full md:w-auto bg-zinc-800 text-white text-sm px-3 py-1.5 rounded-lg border border-zinc-700 focus:outline-none"
           >
             <option value="newest">Newest (Release Year)</option>
             <option value="oldest">Oldest (Release Year)</option>
