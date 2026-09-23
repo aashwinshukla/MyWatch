@@ -6,6 +6,8 @@ function MovieCard({ movie }) {
   const { watchlist, dispatch, ACTIONS } = useWatchlist();
 
   const inWatchlist = watchlist.some(item => item.imdbID === movie.imdbID);
+  const watchlistItem = watchlist.find(item => item.imdbID === movie.imdbID);
+  const isWatched = watchlistItem?.watched || false;
 
   const handleAdd = () => {
     dispatch({ type: ACTIONS.ADD_TO_WATCHLIST, payload: movie });
@@ -21,17 +23,26 @@ function MovieCard({ movie }) {
       onClick={() => navigate(`/title/${movie.imdbID}`)}
     >
       {/* Poster */}
-      {movie.Poster !== 'N/A' ? (
-        <img
-          src={movie.Poster}
-          alt={movie.Title}
-          className="w-full aspect-2/3 object-cover"
-        />
-      ) : (
-        <div className="w-full aspect-2/3 bg-zinc-700 flex items-center justify-center text-zinc-400 text-sm">
-          No Image
-        </div>
-      )}
+      <div className="relative">
+        {movie.Poster !== 'N/A' ? (
+          <img
+            src={movie.Poster}
+            alt={movie.Title}
+            className="w-full aspect-2/3 object-cover"
+          />
+        ) : (
+          <div className="w-full aspect-2/3 bg-zinc-700 flex items-center justify-center text-zinc-400 text-sm">
+            No Image
+          </div>
+        )}
+        
+        {/* Watched badge */}
+        {isWatched && (
+          <div className="absolute top-2 right-2 bg-green-600 text-white rounded-full w-8 h-8 flex items-center justify-center shadow-lg">
+            <span className="text-lg">✓</span>
+          </div>
+        )}
+      </div>
 
       {/* Info */}
       <div className="p-3 flex flex-col gap-1 flex-1">
