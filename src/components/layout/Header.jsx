@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../assets/MyWatch-logo.png';
 
 function Header() {
@@ -23,22 +23,44 @@ function Header() {
               ← Back
             </button>
           )}
-          <Link to="/" className="flex items-center">
+          <NavLink to="/" className="flex items-center">
             <img src={logo} alt="MyWatch" className="h-22 w-55 object-contain" />
-          </Link>
+          </NavLink>
         </div>
 
         {/* Nav links - centered */}
-        <nav className="hidden md:flex items-center gap-6 absolute left-1/2 -translate-x-1/2">
-          <Link to="/" className="text-zinc-400 hover:text-white transition-colors text-sm font-medium">
+        <nav className="hidden md:flex items-center gap-2 absolute left-1/2 -translate-x-1/2">
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) =>
+              isActive 
+                ? 'text-white bg-zinc-800 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
+                : 'text-zinc-400 hover:text-white px-3 py-1.5 transition-colors text-sm font-medium'
+            }
+          >
             Home
-          </Link>
-          <Link to="/search" className="text-zinc-400 hover:text-white transition-colors text-sm font-medium">
+          </NavLink>
+          <NavLink
+            to="/search"
+            className={({ isActive }) =>
+              isActive 
+                ? 'text-white bg-zinc-800 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
+                : 'text-zinc-400 hover:text-white px-3 py-1.5 transition-colors text-sm font-medium'
+            }
+          >
             Search
-          </Link>
-          <Link to="/watchlist" className="text-zinc-400 hover:text-white transition-colors text-sm font-medium">
+          </NavLink>
+          <NavLink
+            to="/watchlist"
+            className={({ isActive }) =>
+              isActive 
+                ? 'text-white bg-zinc-800 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
+                : 'text-zinc-400 hover:text-white px-3 py-1.5 transition-colors text-sm font-medium'
+            }
+          >
             Watchlist
-          </Link>
+          </NavLink>
         </nav>
 
         {/* Account buttons - hidden on mobile */}
@@ -57,12 +79,10 @@ function Header() {
           onClick={() => setMenuOpen(!menuOpen)}
         >
           {menuOpen ? (
-            // X icon when menu is open
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           ) : (
-            // Hamburger icon when menu is closed
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
@@ -74,27 +94,40 @@ function Header() {
       {/* Mobile dropdown - only visible when menuOpen is true */}
       {menuOpen && (
         <div className="md:hidden bg-zinc-900 border-t border-zinc-800 px-4 py-4 flex flex-col gap-4">
-          <Link
+          <NavLink
             to="/"
-            className="text-zinc-400 hover:text-white transition-colors text-sm font-medium"
+            end
+            className={({ isActive }) =>
+              isActive 
+                ? 'text-white bg-zinc-800 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
+                : 'text-zinc-400 hover:text-white transition-colors text-sm font-medium'
+            }
             onClick={() => setMenuOpen(false)}
           >
             Home
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/search"
-            className="text-zinc-400 hover:text-white transition-colors text-sm font-medium"
+            className={({ isActive }) =>
+              isActive 
+                ? 'text-white bg-zinc-800 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
+                : 'text-zinc-400 hover:text-white transition-colors text-sm font-medium'
+            }
             onClick={() => setMenuOpen(false)}
           >
             Search
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             to="/watchlist"
-            className="text-zinc-400 hover:text-white transition-colors text-sm font-medium"
+            className={({ isActive }) =>
+              isActive 
+                ? 'text-white bg-zinc-800 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
+                : 'text-zinc-400 hover:text-white transition-colors text-sm font-medium'
+            }
             onClick={() => setMenuOpen(false)}
           >
             Watchlist
-          </Link>
+          </NavLink>
           <hr className="border-zinc-800" />
           <button className="text-zinc-400 hover:text-white transition-colors text-sm font-medium text-left">
             Account
