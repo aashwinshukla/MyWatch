@@ -4,7 +4,6 @@ import { searchMovies } from '../api/omdb';
 import MovieCard from '../components/ui/MovieCard';
 import PageWrapper from '../components/layout/PageWrapper';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
-import SearchBar from '../components/ui/SearchBar';
 import { getRandomQuery } from '../utils/randomQuery';
 
 function Home() {
@@ -42,18 +41,22 @@ function Home() {
     loadMultipleSearches();
   }, []);
 
-  const handleSearch = (query) => {
-    // Navigate to search page
-    navigate('/search');
-  };
-
   if (loading) return <PageWrapper><LoadingSpinner /></PageWrapper>;
   if (error) return <PageWrapper><div className="text-red-500 text-center mt-20">{error}</div></PageWrapper>;
 
   return (
     <PageWrapper>
       <div className="max-w-2xl mx-auto mb-8">
-        <SearchBar onSearch={handleSearch} />
+        <div 
+          className="relative flex items-center w-full cursor-pointer"
+          onClick={() => navigate('/search')}
+        >
+          <input
+            placeholder="Search movies or shows..."
+            readOnly
+            className="w-full bg-zinc-800 text-white placeholder-zinc-500 text-sm px-4 py-2.5 rounded-lg border border-zinc-700 focus:outline-none focus:border-red-500 transition-colors cursor-pointer"
+          />
+        </div>
       </div>
       
       <h1 className="text-white text-2xl font-bold mb-6">Popular Movies</h1>
