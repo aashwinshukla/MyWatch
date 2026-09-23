@@ -5,19 +5,39 @@ import { searchMovies } from '../api/omdb';
 import MovieCard from '../components/ui/MovieCard';
 import { getRandomQuery } from '../utils/randomQuery';
 
+const STORAGE_KEY = 'search_state';
+
 function Search() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [query, setQuery] = useState('');
 
-  // Load random movies on mount
+  // Restore search state or load random movies on mount
   useEffect(() => {
-    searchMovies(getRandomQuery()).then(results => {
-      if (results && results.length > 0) setMovies(results);
+    const savedState = sessionStorage.getItem(STORAGE_KEY);
+    
+    if (savedState) {
+      // Restore previous search
+      const { query: savedQuery, movies: savedMovies } = JSON.parse(savedState);
+      setQuery(savedQuery);
+      setMovies(savedMovies);
       setLoading(false);
-    });
+    } else {
+      // Load random movies
+      searchMovies(getRandomQuery()).then(results => {
+        if (results && results.length > 0) setMovies(results);
+        setLoading(false);
+      });
+    }
   }, []);
+
+  // Save search state whenever it changes
+  useEffect(() => {
+    if (!loading && movies.length > 0) {
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ query, movies }));
+    }
+  }, [query, movies, loading]);
 
   const handleSearch = async (searchQuery) => {
     if (!searchQuery) {

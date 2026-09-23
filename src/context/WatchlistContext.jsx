@@ -43,7 +43,20 @@ export function WatchlistProvider({ children }) {
   // Load watchlist from localStorage on mount
   useEffect(() => {
     const stored = getWatchlist();
-    dispatch({ type: ACTIONS.LOAD_WATCHLIST, payload: stored });
+    
+    // Add timestamps to old entries that don't have addedAt
+    const withTimestamps = stored.map((item, index) => {
+      if (!item.addedAt) {
+        // Use a timestamp in the past, staggered by index so they have different times
+        return { 
+          ...item, 
+          addedAt: new Date(Date.now() - (stored.length - index) * 1000).toISOString() 
+        };
+      }
+      return item;
+    });
+    
+    dispatch({ type: ACTIONS.LOAD_WATCHLIST, payload: withTimestamps });
   }, []);
 
   // Save to localStorage whenever watchlist changes

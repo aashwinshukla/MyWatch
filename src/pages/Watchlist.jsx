@@ -6,7 +6,7 @@ import PageWrapper from '../components/layout/PageWrapper';
 function Watchlist() {
   const { watchlist } = useWatchlist();
   const [filter, setFilter] = useState('all'); // all, movie, series, watched, unwatched
-  const [sort, setSort] = useState('newest'); // newest, oldest, title
+  const [sort, setSort] = useState('newest'); // newest, oldest, recentlyAdded, firstAdded, title
 
   // Apply filter
   const filtered = watchlist.filter(item => {
@@ -19,8 +19,22 @@ function Watchlist() {
   // Apply sort
   const sorted = [...filtered].sort((a, b) => {
     if (sort === 'title') return a.Title.localeCompare(b.Title);
-    if (sort === 'oldest') return new Date(a.addedAt) - new Date(b.addedAt);
-    return new Date(b.addedAt) - new Date(a.addedAt); // newest first
+    
+    // Sort by release year
+    if (sort === 'newest' || sort === 'oldest') {
+      const aYear = parseInt(a.Year) || 0;
+      const bYear = parseInt(b.Year) || 0;
+      return sort === 'newest' ? bYear - aYear : aYear - bYear;
+    }
+    
+    // Sort by when added to watchlist
+    if (sort === 'recentlyAdded' || sort === 'firstAdded') {
+      const aTime = a.addedAt ? new Date(a.addedAt).getTime() : 0;
+      const bTime = b.addedAt ? new Date(b.addedAt).getTime() : 0;
+      return sort === 'recentlyAdded' ? bTime - aTime : aTime - bTime;
+    }
+    
+    return 0;
   });
 
   return (
@@ -53,8 +67,10 @@ function Watchlist() {
             onChange={(e) => setSort(e.target.value)}
             className="bg-zinc-800 text-white text-sm px-3 py-1.5 rounded-lg border border-zinc-700 focus:outline-none"
           >
-            <option value="newest">Newest</option>
-            <option value="oldest">Oldest</option>
+            <option value="newest">Newest (Release Year)</option>
+            <option value="oldest">Oldest (Release Year)</option>
+            <option value="recentlyAdded">Recently Added</option>
+            <option value="firstAdded">First Added</option>
             <option value="title">Title</option>
           </select>
         </div>
