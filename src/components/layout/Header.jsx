@@ -1,13 +1,19 @@
 import { useState } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { useWatchlist } from '../../context/WatchlistContext';
 import logo from '../../assets/MyWatch-logo.png';
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { watchlist } = useWatchlist();
 
   const isDetailPage = location.pathname.startsWith('/title/');
+  
+  // Calculate counts
+  const totalCount = watchlist.length;
+  const watchedCount = watchlist.filter(item => item.watched).length;
 
   return (
     <header className="sticky top-0 z-50 bg-zinc-900 border-b border-zinc-800">
@@ -35,7 +41,7 @@ function Header() {
             end
             className={({ isActive }) =>
               isActive 
-                ? 'text-white bg-blue-500 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
+                ? 'text-white bg-blue-600 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
                 : 'text-zinc-400 hover:text-white px-3 py-1.5 transition-colors text-sm font-medium'
             }
           >
@@ -45,7 +51,7 @@ function Header() {
             to="/search"
             className={({ isActive }) =>
               isActive 
-                ? 'text-white bg-blue-500  px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
+                ? 'text-white bg-blue-600 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
                 : 'text-zinc-400 hover:text-white px-3 py-1.5 transition-colors text-sm font-medium'
             }
           >
@@ -55,11 +61,16 @@ function Header() {
             to="/watchlist"
             className={({ isActive }) =>
               isActive 
-                ? 'text-white bg-blue-500  px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
-                : 'text-zinc-400 hover:text-white px-3 py-1.5 transition-colors text-sm font-medium'
+                ? 'text-white bg-blue-600 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium flex items-center gap-2' 
+                : 'text-zinc-400 hover:text-white px-3 py-1.5 transition-colors text-sm font-medium flex items-center gap-2'
             }
           >
-            Watchlist
+            <span>Watchlist</span>
+            {totalCount > 0 && (
+              <span className="bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full min-w-[20px] text-center">
+                {totalCount}
+              </span>
+            )}
           </NavLink>
         </nav>
 
@@ -99,7 +110,7 @@ function Header() {
             end
             className={({ isActive }) =>
               isActive 
-                ? 'text-white bg-blue-500  px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
+                ? 'text-white bg-blue-600 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
                 : 'text-zinc-400 hover:text-white transition-colors text-sm font-medium'
             }
             onClick={() => setMenuOpen(false)}
@@ -110,7 +121,7 @@ function Header() {
             to="/search"
             className={({ isActive }) =>
               isActive 
-                ? 'text-white bg-blue-500  px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
+                ? 'text-white bg-blue-600 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
                 : 'text-zinc-400 hover:text-white transition-colors text-sm font-medium'
             }
             onClick={() => setMenuOpen(false)}
@@ -121,12 +132,17 @@ function Header() {
             to="/watchlist"
             className={({ isActive }) =>
               isActive 
-                ? 'text-white bg-blue-500  px-3 py-1.5 rounded-lg transition-colors text-sm font-medium' 
-                : 'text-zinc-400 hover:text-white transition-colors text-sm font-medium'
+                ? 'text-white bg-blue-600 px-3 py-1.5 rounded-lg transition-colors text-sm font-medium flex items-center gap-2' 
+                : 'text-zinc-400 hover:text-white transition-colors text-sm font-medium flex items-center gap-2'
             }
             onClick={() => setMenuOpen(false)}
           >
-            Watchlist
+            <span>Watchlist</span>
+            {totalCount > 0 && (
+              <span className="bg-red-600 text-white text-xs font-semibold px-2 py-0.5 rounded-full min-w-[20px] text-center">
+                {totalCount}
+              </span>
+            )}
           </NavLink>
           <hr className="border-zinc-800" />
           <button className="text-zinc-400 hover:text-white transition-colors text-sm font-medium text-left">

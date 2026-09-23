@@ -5,8 +5,11 @@ import PageWrapper from '../components/layout/PageWrapper';
 
 function Watchlist() {
   const { watchlist } = useWatchlist();
-  const [filter, setFilter] = useState('all'); // all, movie, series, watched, unwatched
-  const [sort, setSort] = useState('newest'); // newest, oldest, recentlyAdded, firstAdded, title
+  const [filter, setFilter] = useState('all');
+  const [sort, setSort] = useState('newest');
+
+  // Calculate watched count
+  const watchedCount = watchlist.filter(item => item.watched).length;
 
   useEffect(() => {
     document.title = 'Watchlist — MyWatch';
@@ -43,7 +46,14 @@ function Watchlist() {
 
   return (
     <PageWrapper>
-      <h1 className="text-white text-2xl font-bold mb-6">My Watchlist</h1>
+      <div className="flex items-center gap-3 mb-6">
+        <h1 className="text-white text-2xl font-bold">My Watchlist</h1>
+        {watchlist.length > 0 && (
+          <span className="text-zinc-400 text-sm">
+            {watchedCount} / {watchlist.length} watched
+          </span>
+        )}
+      </div>
 
       {/* Filters and Sort */}
       <div className="flex flex-wrap items-center gap-4 mb-6">
