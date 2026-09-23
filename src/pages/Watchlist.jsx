@@ -13,7 +13,7 @@ function Watchlist() {
     if (filter === 'all') return true;
     if (filter === 'watched') return item.watched;
     if (filter === 'unwatched') return !item.watched;
-    return item.Type === filter; // 'movie' or 'series'
+    return item.Type.toLowerCase() === filter; // 'movie' or 'series'
   });
 
   // Apply sort
