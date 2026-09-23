@@ -10,6 +10,7 @@ const ACTIONS = {
   ADD_TO_WATCHLIST: 'ADD_TO_WATCHLIST',
   REMOVE_FROM_WATCHLIST: 'REMOVE_FROM_WATCHLIST',
   TOGGLE_WATCHED: 'TOGGLE_WATCHED',
+  UPDATE_NOTE: 'UPDATE_NOTE',
 };
 
 // Reducer function - handles state updates
@@ -28,6 +29,13 @@ function watchlistReducer(state, action) {
       return state.map(item =>
         item.imdbID === action.payload
           ? { ...item, watched: !item.watched }
+          : item
+      );
+
+    case ACTIONS.UPDATE_NOTE:
+      return state.map(item =>
+        item.imdbID === action.payload.imdbID
+          ? { ...item, note: action.payload.note }
           : item
       );
 

@@ -11,9 +11,20 @@ function TitleDetail() {
   const [backdrop, setBackdrop] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [noteText, setNoteText] = useState('');
 
   const { watchlist, dispatch, ACTIONS } = useWatchlist();
   const inWatchlist = watchlist.some(item => item.imdbID === imdbID);
+  const watchlistItem = watchlist.find(item => item.imdbID === imdbID);
+
+  // Load note when component mounts or watchlist changes
+  useEffect(() => {
+    if (watchlistItem?.note) {
+      setNoteText(watchlistItem.note);
+    } else {
+      setNoteText('');
+    }
+  }, [watchlistItem]);
 
 
   useEffect(() => {
@@ -45,6 +56,7 @@ function TitleDetail() {
         Type: movie.Type,
         watched: false,
         addedAt: new Date().toISOString(),
+        note: '',
       }
     });
   };
@@ -55,6 +67,13 @@ function TitleDetail() {
 
   const handleToggleWatched = () => {
     dispatch({ type: ACTIONS.TOGGLE_WATCHED, payload: imdbID });
+  };
+
+  const handleSaveNote = () => {
+    dispatch({
+      type: ACTIONS.UPDATE_NOTE,
+      payload: { imdbID, note: noteText }
+    });
   };
 
   if (loading) return <LoadingSpinner />;
@@ -142,6 +161,28 @@ function TitleDetail() {
             </button>
           )}
         </div>
+
+        {/* Personal Note - only show if in watchlist */}
+        {inWatchlist && (
+          <div className="mb-8 border-t border-zinc-800 pt-6">
+            <label className="text-zinc-400 text-sm font-medium mb-2 block">
+              Personal Note
+            </label>
+            <textarea
+              value={noteText}
+              onChange={(e) => setNoteText(e.target.value)}
+              placeholder="Why do you want to watch this? Who recommended it? Add your thoughts here..."
+              className="w-full bg-zinc-800 text-white placeholder-zinc-500 text-sm px-4 py-3 rounded-lg border border-zinc-700 focus:outline-none focus:border-red-500 transition-colors resize-none"
+              rows={3}
+            />
+            <button
+              onClick={handleSaveNote}
+              className="mt-2 px-4 py-1.5 bg-zinc-700 hover:bg-zinc-600 text-white text-sm font-medium rounded-lg transition-colors"
+            >
+              Save Note
+            </button>
+          </div>
+        )}
 
         {/* Details grid */}
         <div className="grid grid-cols-2 gap-4 border-t border-zinc-800 pt-6">
