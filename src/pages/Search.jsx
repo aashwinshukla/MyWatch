@@ -5,6 +5,7 @@ import LoadingSpinner from '../components/ui/LoadingSpinner';
 import { searchMovies } from '../api/omdb';
 import MovieCard from '../components/ui/MovieCard';
 import { getRandomQuery } from '../utils/randomQuery';
+import toast from 'react-hot-toast';
 
 const STORAGE_KEY = 'search_state';
 
@@ -26,7 +27,7 @@ function Search() {
   const savedState = getSavedState();
   const [movies, setMovies] = useState(savedState.movies);
   const [loading, setLoading] = useState(savedState.movies.length === 0);
-  const [error, setError] = useState(null);
+  
   const [query, setQuery] = useState(savedState.query);
 
   // Load random movies on mount only if no saved state

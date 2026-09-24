@@ -4,13 +4,14 @@ import { searchMovies } from '../api/omdb';
 import MovieCard from '../components/ui/MovieCard';
 import PageWrapper from '../components/layout/PageWrapper';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import toast from 'react-hot-toast';
 import { getRandomQuery } from '../utils/randomQuery';
 
 function Home() {
   const navigate = useNavigate();
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  
 
   useEffect(() => {
     document.title = 'Home — MyWatch';

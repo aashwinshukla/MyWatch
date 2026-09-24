@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getDetails } from '../api/omdb';
 import { getBackdrop } from '../api/tmdb';
@@ -11,7 +12,6 @@ function TitleDetail() {
   const [movie, setMovie] = useState(null);
   const [backdrop, setBackdrop] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [noteText, setNoteText] = useState('');
   const [copied, setCopied] = useState(false);
 
@@ -35,8 +35,7 @@ function TitleDetail() {
   useEffect(() => {
     getDetails(imdbID).then(data => {
       if (!data) {
-        setError('Movie not found');
-        setLoading(false);
+        setLoading(false); // toast already shown inside getDetails()
       } else {
         setMovie(data);
         getBackdrop(data.Title).then(url => {
@@ -100,9 +99,8 @@ function TitleDetail() {
     }
   };
 
-  if (loading)return <LoadingSpinner />;
-  // Remove error div - getDetails() now shows toast
-  if (error) return <LoadingSpinner />;
+  if (loading) return <LoadingSpinner />;
+  if (!movie) return <LoadingSpinner />;
 
 
   const isWatched = watchlist.find(item => item.imdbID === imdbID)?.watched;
