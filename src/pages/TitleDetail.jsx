@@ -4,6 +4,7 @@ import { getDetails } from '../api/omdb';
 import { getBackdrop } from '../api/tmdb';
 import { useWatchlist } from '../context/WatchlistContext';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import toast from 'react-hot-toast';
 
 function TitleDetail() {
   const { imdbID } = useParams();
@@ -60,14 +61,23 @@ function TitleDetail() {
         note: '',
       }
     });
+    toast.success('Added to Watchlist!');
   };
 
   const handleRemove = () => {
     dispatch({ type: ACTIONS.REMOVE_FROM_WATCHLIST, payload: imdbID });
+    toast.error('Removed From Watchlist!')
   };
 
   const handleToggleWatched = () => {
+    const willbeWatched = !watchlist.find(item.imdbID === imdbID)?.watched;
     dispatch({ type: ACTIONS.TOGGLE_WATCHED, payload: imdbID });
+
+    if(willbeWatched){
+      toast.success('Marked as Watched');
+    }else{
+      toast('Marked as Unwatched!', { icon: '👀'});
+    }
   };
 
   const handleSaveNote = () => {
@@ -75,15 +85,18 @@ function TitleDetail() {
       type: ACTIONS.UPDATE_NOTE,
       payload: { imdbID, note: noteText }
     });
+    toast.success('Note saved!');
   };
 
   const handleShareLink = async () => {
     try {
       await navigator.clipboard.writeText(window.location.href);
       setCopied(true);
+      toast.success('Link Copied to Clipboard!');
       setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
     } catch (err) {
       console.error('Failed to copy link:', err);
+      toast.error('Failed to copy link');
     }
   };
 

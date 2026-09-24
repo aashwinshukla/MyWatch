@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useWatchlist } from '../../context/WatchlistContext';
+import toast from 'react-hot-toast';
 
 function MovieCard({ movie }) {
   const navigate = useNavigate();
@@ -61,7 +62,13 @@ function MovieCard({ movie }) {
           }`}
           onClick={(e) => {
             e.stopPropagation();
-            inWatchlist ? handleRemove() : handleAdd();
+            if(inWatchlist){
+              handleRemove();
+              toast.error('Removed from Watchlist!');              
+            }else{
+              handleAdd();
+              toast.successA('Added To Watchlist!');
+            }
           }}
         >
           {inWatchlist ? 'Remove' : '+ Watchlist'}
