@@ -158,3 +158,47 @@ export async function getPersonDetails(tmdbID) {
     return null;
   }
 }
+
+
+/**
+ * Get all movie and TV credits for a person
+ * Returns in OMDb-compatible shape so MovieCard works without changes
+ * @param {number|string} tmdbID
+ * @returns {Promise<Array>}
+ */
+export async function getPersonCredits(tmdbID) {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/person/${tmdbID}/combined_credits`,
+      options
+    );
+
+    if (!response.ok) {
+      toast.error('Failed to load credits.');
+      return [];
+    }
+
+    const data = await response.json();
+
+    // Combine cast + crew, remove duplicates, sort by popularity
+    const allCredits = [
+      ...(data.cast || []),
+      ...(data.crew || []),
+    ];
+
+    const unique = Array.from(
+      new Map(allCredits.map(item => [item.id, item])).values()
+    );
+
+    const sorted = unique
+      .filter(item => item.poster_path) // only show items with poster
+      .sort((a, b) => (b.popularity || 0) - (a.popularity || 0))
+      .slice(0, 20); // top 20 most popular
+
+    return sorted.map(item => convertTMDBToOMDb(item));
+  } catch (error) {
+    console.error('Person credits error:', error);
+    toast.error('Connection failed. Check your internet.');
+    return [];
+  }
+}
