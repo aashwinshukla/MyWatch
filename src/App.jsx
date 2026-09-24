@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import PersonDetail from './pages/PersonDetail';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
@@ -17,6 +18,7 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/watchlist" element={<Watchlist />} />
           <Route path="/title/:imdbID" element={<TitleDetail />} />
+          <Route path="/person/:tmdbID" element={<PersonDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
