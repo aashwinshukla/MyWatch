@@ -64,10 +64,10 @@ function MovieCard({ movie }) {
             e.stopPropagation();
             if(inWatchlist){
               handleRemove();
-              toast.error('Removed from Watchlist!');              
+              toast.error('Removed from Watchlist');              
             }else{
               handleAdd();
-              toast.successA('Added To Watchlist!');
+              toast.success('Added to Watchlist!');
             }
           }}
         >
