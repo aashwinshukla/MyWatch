@@ -11,13 +11,12 @@ import App from './App.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <Toaster>
-        <WatchlistProvider>
-          <ScrollToTop>
-            <App />
-          </ScrollToTop>
-        </WatchlistProvider>
-      </Toaster>
+      <WatchlistProvider>
+        <ScrollToTop>
+          <App />
+        </ScrollToTop>
+      </WatchlistProvider>
+      <Toaster position="bottom-right" />
     </BrowserRouter>
   </StrictMode>
 )
