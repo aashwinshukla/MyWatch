@@ -63,7 +63,7 @@ function Search() {
     const results = await searchMovies(searchQuery);
 
     if (!results || results.length === 0) {
-      setError('No movies found');
+      toast.error('No movies found for "'+searchQuery+'"');
       setMovies([]);
     } else {
       setMovies(results);
@@ -77,7 +77,7 @@ function Search() {
       <SearchBar onSearch={handleSearch} initialQuery={query} />
 
       {loading && <LoadingSpinner />}
-      {error && <div className="text-red-500 text-center mt-10">{error}</div>}
+
 
       {!loading && movies.length > 0 && (
         <>

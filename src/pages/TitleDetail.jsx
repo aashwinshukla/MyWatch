@@ -100,8 +100,10 @@ function TitleDetail() {
     }
   };
 
-  if (loading) return <LoadingSpinner />;
-  if (error) return <div className="text-red-500 text-center mt-20">{error}</div>;
+  if (loading)return <LoadingSpinner />;
+  // Remove error div - getDetails() now shows toast
+  if (error) return <LoadingSpinner />;
+
 
   const isWatched = watchlist.find(item => item.imdbID === imdbID)?.watched;
 

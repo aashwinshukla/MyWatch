@@ -29,7 +29,7 @@ function Home() {
       }
       
       if (allResults.length === 0) {
-        setError('Failed to load movies');
+        toast.error('Failed to load movies');
       } else {
         // Remove duplicates by imdbID and limit to 25 movies
         const unique = Array.from(new Map(allResults.map(m => [m.imdbID, m])).values()).slice(0, 25);
@@ -42,7 +42,9 @@ function Home() {
   }, []);
 
   if (loading) return <PageWrapper><LoadingSpinner /></PageWrapper>;
-  if (error) return <PageWrapper><div className="text-red-500 text-center mt-20">{error}</div></PageWrapper>;
+  // Remove the error div - errors now show as toasts
+  // if (error) return <div>...</div>;  ← Delete this line
+
 
   return (
     <PageWrapper>
