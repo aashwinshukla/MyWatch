@@ -61,18 +61,17 @@ function Search() {
 
     setQuery(searchQuery);
     setLoading(true);
-    setError(null);
     setPeople([]);
 
     const { movies: movieResults, people: peopleResults } = await searchTMDB(searchQuery);
 
-    const results = await searchMovies(searchQuery);
+    setPeople(peopleResults);
 
-    if (!results || results.length === 0) {
-      toast.error('No movies found for "'+searchQuery+'"');
+    if (!movieResults || movieResults.length === 0) {
+      toast.error('No results found for "' + searchQuery + '"');
       setMovies([]);
     } else {
-      setMovies(results);
+      setMovies(movieResults);
     }
 
     setLoading(false);
