@@ -44,3 +44,72 @@ export async function getBackdrop(title) {
     return null;
   }
 }
+
+/**
+ * Search TMDB for movies, TV shows, and people
+ * Returns { movies: [], people: [] } separately
+ * @param {string} query
+ * @returns {Promise<{ movies: Array, people: Array }>}
+ */
+export async function searchTMDB(query) {
+  try{
+    const response = await fetch(
+      `${BASE_URL}/search/multi?query=${encodeURIComponent(query)}&include_adult=false`,
+      options
+    );
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        toast.error('Invalid TMDB token. Check configuration.');
+      } else if (response.status === 429) {
+        toast.error('Too many requests. Please wait a moment.');
+      } else {
+        toast.error('Search failed. Try again.');
+      }
+      return { movies: [], people: [] };
+    }
+
+    const data = await response.json();
+    if (!data.results || data.results.length === 0) {
+      return { movies: [], people: [] };
+    }
+
+    const movies = [];
+    const people = [];
+
+    for(const item of data.results ){
+      if (item.media_type === 'movie' || item.media_type === 'tv') {
+        movies.push(convertTMDBToOMDb(item));
+    }
+
+    if(item.media_type === 'person'){
+      people.push({
+          tmdbID: item.id,
+          name: item.name,
+          photo: item.profile_path
+            ? `https://image.tmdb.org/t/p/w300${item.profile_path}`
+            : null,
+          knownFor: item.known_for_department || 'Acting',
+          knownForTitles: (item.known_for || [])
+            .map(m => m.title || m.name)
+            .filter(Boolean)
+            .slice(0, 3)
+            .join(', '),
+        });
+      }
+    }
+
+    const uniqueMovies = Array.from(
+      new Map(movies.filter(r => r.imdbID).map(r => [r.imdbID, r])).values()
+    );
+
+    return { movies: uniqueMovies, people};
+  }
+
+
+  catch (error){
+    console.error('TMDB search error:', error);
+    toast.error('Connection failed. Check your internet.');
+    return { movies: [], people: [] };
+  }
+}
