@@ -21,7 +21,13 @@ function MovieCard({ movie }) {
   return (
     <div
       className="bg-zinc-800 rounded-lg overflow-hidden cursor-pointer hover:scale-105 hover:shadow-xl transition-transform duration-200 flex flex-col"
-      onClick={() => navigate(`/title/${movie.imdbID}`)}
+      onClick={() => {
+        if (movie.imdbID.startsWith('tmdb_')) {
+          toast('Full details not available for this title', { icon: 'ℹ️' });
+          return;
+        }
+        navigate(`/title/${movie.imdbID}`);
+      }}
     >
       {/* Poster */}
       <div className="relative">
