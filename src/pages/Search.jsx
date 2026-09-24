@@ -6,7 +6,6 @@ import { searchMovies } from '../api/omdb';
 import MovieCard from '../components/ui/MovieCard';
 import { getRandomQuery } from '../utils/randomQuery';
 import toast from 'react-hot-toast';
-import { searchMovies } from '../api/omdb';
 import { searchTMDB } from '../api/tmdb';
 import PersonCard from '../components/ui/PersonCard';
 const STORAGE_KEY = 'search_state';
