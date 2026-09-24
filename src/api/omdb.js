@@ -1,5 +1,5 @@
 // OMDb API client
-
+import toast from "react-hot-toast";
 const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
 const BASE_URL = 'https://www.omdbapi.com/';
 
@@ -14,19 +14,27 @@ export async function searchMovies(query) {
   try {
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      if(response.status===401){
+        toast.error('Invalid API key. Check your Configuration.');
+      }else if(response.status === 429){
+        toast.error('Too many requests. Please wait a moment.');
+      }else{
+        toast.error('Failed to Search Movie. Try again.');
+      }
+      return [];
     }
 
     const data = await response.json();
 
     if (data.Response === 'False') {
-      console.warn('OMDb API error:', data.Error);
+      
       return [];
     }
 
     return data.Search || [];
   } catch (error) {
     console.error('Failed to search movies:', error);
+    toast.error('Connection Failed. Check your Internet.');
     return [];
   }
 }
@@ -42,19 +50,28 @@ export async function getDetails(imdbID) {
   try {
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      if(response.status===401){
+        toast.error('Invalid API key. Check your Configuration.');
+      }else if(response.status === 429){
+        toast.error('Too many requests. Please wait a moment.');
+      }else{
+        toast.error('Failed to Search Movie. Try again.');
+      }
+
+      return null;
     }
     
     const data = await response.json();
 
     if (data.Response === 'False') {
-      console.warn('OMDb API error:', data.Error);
+      toast.error('Movie not found');
       return null;
     }
 
     return data;
   } catch (error) {
     console.error('Failed to fetch movie details:', error);
+    toast.error('Connection failed. Check your Internet.');
     return null;
   }
 }
