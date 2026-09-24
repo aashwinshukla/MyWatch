@@ -7,6 +7,7 @@ function Watchlist() {
   const { watchlist } = useWatchlist();
   const [filter, setFilter] = useState('all');
   const [sort, setSort] = useState('newest');
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Calculate watched count
   const watchedCount = watchlist.filter(item => item.watched).length;
@@ -15,8 +16,12 @@ function Watchlist() {
     document.title = 'Watchlist — MyWatch';
   }, []);
 
+  const searched = watchlist.filter(item => 
+    item.Title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   // Apply filter
-  const filtered = watchlist.filter(item => {
+  const filtered = searched.filter(item => {
     if (filter === 'all') return true;
     if (filter === 'watched') return item.watched;
     if (filter === 'unwatched') return !item.watched;
@@ -54,6 +59,28 @@ function Watchlist() {
           </span>
         )}
       </div>
+
+      {/* Search within watchlist */}
+      {watchlist.length > 0 && (
+        <div className="relative mb-4">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search your watchlist..."
+            className="w-full md:w-80 bg-zinc-800 text-white placeholder-zinc-500 text-sm px-4 py-2 rounded-lg border border-zinc-700 focus:outline-none focus:border-red-500 transition-colors"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white text-xs"
+            >
+              ✕
+            </button>
+          )}
+        </div>
+      )}
+
 
       {/* Filters and Sort */}
       <div className="flex flex-col md:flex-row md:flex-wrap items-stretch md:items-center gap-4 mb-6">
@@ -101,7 +128,12 @@ function Watchlist() {
 
       {/* No results after filter */}
       {watchlist.length > 0 && sorted.length === 0 && (
-        <div className="text-zinc-400 text-center mt-20">No items match this filter.</div>
+        <div className="text-zinc-400 text-center mt-20">
+          {searchQuery
+          ? `No results for "${searchQuery}"`
+          : 'No items match this filter.'
+          }    
+        </div>
       )}
 
       {/* Grid */}
