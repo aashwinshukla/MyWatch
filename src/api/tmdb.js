@@ -113,3 +113,48 @@ export async function searchTMDB(query) {
     return { movies: [], people: [] };
   }
 }
+
+/**
+ * Get full details for a person by TMDB ID
+ * @param {number|string} tmdbID
+ * @returns {Promise<Object|null>}
+ */
+
+export async function getPersonDetails(tmdbID) {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/person/${tmdbID}`,
+      options
+    );
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        toast.error('Invalid TMDB token. Check configuration.');
+      } else if (response.status === 404) {
+        toast.error('Person not found.');
+      } else {
+        toast.error('Failed to load person details.');
+      }
+      return null;
+    }
+
+    const data = await response.json();
+
+    return {
+      tmdbID: data.id,
+      name: data.name,
+      photo: data.profile_path
+        ? `https://image.tmdb.org/t/p/w500${data.profile_path}`
+        : null,
+      birthday: data.birthday || null,
+      placeOfBirth: data.place_of_birth || null,
+      biography: data.biography || null,
+      knownFor: data.known_for_department || 'Acting',
+      imdbID: data.imdb_id || null,
+    };
+  } catch (error) {
+    console.error('Person details error:', error);
+    toast.error('Connection failed. Check your internet.');
+    return null;
+  }
+}
