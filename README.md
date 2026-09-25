@@ -41,15 +41,6 @@ Visit `http://localhost:5173`
 
 ---
 
-## 📚 Documentation
-
-- **[PHASE_1.md](./PHASE_1.md)** — Original project spec & foundation goals
-- **[GETTING_STARTED.md](./GETTING_STARTED.md)** — Phase 1 polish checklist
-- **[PHASE_2.md](./PHASE_2.md)** — Planned features roadmap
-- **[COMPLETED.md](./COMPLETED.md)** — Full list of completed features
-- **[PHASE_3.md](./PHASE_3.md)** — Next features to build
-
----
 
 ## 🛠️ Built With
 
