@@ -68,7 +68,7 @@ function Watchlist() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search your watchlist..."
-            className="w-full md:w-80 bg-zinc-800 text-white text-sm px-4 py-2 rounded-lg border border-zinc-700 focus:outline-none focus:border-red-500 transition-colors"
+            className="w-full md:w-80 bg-zinc-800 text-white  placeholder-zinc-500 text-sm px-4 py-2 rounded-lg border border-zinc-700 focus:outline-none focus:border-red-500 transition-colors"
           />
           {searchQuery && (
             <button
