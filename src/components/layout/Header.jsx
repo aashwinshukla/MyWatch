@@ -11,9 +11,7 @@ function Header() {
 
   const isDetailPage = location.pathname.startsWith('/title/');
   
-  // Calculate counts
   const totalCount = watchlist.length;
-  const watchedCount = watchlist.filter(item => item.watched).length;
 
   return (
     <header className="sticky top-0 z-50 bg-zinc-900 border-b border-zinc-800">

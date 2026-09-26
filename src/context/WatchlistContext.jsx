@@ -1,10 +1,8 @@
 import { createContext, useContext, useReducer, useEffect } from 'react';
 import { getWatchlist, saveWatchlist } from '../utils/storage';
 
-// Create the context
 const WatchlistContext = createContext();
 
-// Action types
 const ACTIONS = {
   LOAD_WATCHLIST: 'LOAD_WATCHLIST',
   ADD_TO_WATCHLIST: 'ADD_TO_WATCHLIST',
@@ -13,7 +11,6 @@ const ACTIONS = {
   UPDATE_NOTE: 'UPDATE_NOTE',
 };
 
-// Reducer function - handles state updates
 function watchlistReducer(state, action) {
   switch (action.type) {
     case ACTIONS.LOAD_WATCHLIST:
@@ -44,34 +41,18 @@ function watchlistReducer(state, action) {
   }
 }
 
-// Provider component
 export function WatchlistProvider({ children }) {
   const [watchlist, dispatch] = useReducer(watchlistReducer, []);
 
   // Load watchlist from localStorage on mount
   useEffect(() => {
     const stored = getWatchlist();
-    
-    // Add timestamps to old entries that don't have addedAt
-    const withTimestamps = stored.map((item, index) => {
-      if (!item.addedAt) {
-        // Use a timestamp in the past, staggered by index so they have different times
-        return { 
-          ...item, 
-          addedAt: new Date(Date.now() - (stored.length - index) * 1000).toISOString() 
-        };
-      }
-      return item;
-    });
-    
-    dispatch({ type: ACTIONS.LOAD_WATCHLIST, payload: withTimestamps });
+    dispatch({ type: ACTIONS.LOAD_WATCHLIST, payload: stored });
   }, []);
 
   // Save to localStorage whenever watchlist changes
   useEffect(() => {
-    if (watchlist.length >= 0) {
-      saveWatchlist(watchlist);
-    }
+    saveWatchlist(watchlist);
   }, [watchlist]);
 
   return (
@@ -81,7 +62,6 @@ export function WatchlistProvider({ children }) {
   );
 }
 
-// Custom hook to use the context
 export function useWatchlist() {
   const context = useContext(WatchlistContext);
   if (!context) {
