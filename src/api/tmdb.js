@@ -100,10 +100,20 @@ export async function searchTMDB(query) {
     }
 
     const uniqueMovies = Array.from(
-      new Map(movies.filter(r => r.imdbID).map(r => [r.imdbID, r])).values()
+      new Map(movies.map(r => [r.tmdbID, r])).values()
     );
 
-    return { movies: uniqueMovies, people};
+    // Fetch real imdb_id for each result in parallel
+    // Without this, all results get tmdb_ prefix and can't open detail page
+    const resolved = await Promise.all(
+      uniqueMovies.map(async (movie) => {
+        if (movie.imdbID) return movie; // already has it
+        const imdbID = await fetchImdbID(movie.tmdbID, movie.Type);
+        return { ...movie, imdbID: imdbID || `tmdb_${movie.tmdbID}` };
+      })
+    );
+
+    return { movies: resolved, people };
   }
 
 
@@ -191,11 +201,22 @@ export async function getPersonCredits(tmdbID) {
     );
 
     const sorted = unique
-      .filter(item => item.poster_path) // only show items with poster
+      .filter(item => item.poster_path)
       .sort((a, b) => (b.popularity || 0) - (a.popularity || 0))
-      .slice(0, 20); // top 20 most popular
+      .slice(0, 20);
 
-    return sorted.map(item => convertTMDBToOMDb(item));
+    const converted = sorted.map(item => convertTMDBToOMDb(item));
+
+    // Resolve imdb_ids for all credits
+    const resolved = await Promise.all(
+      converted.map(async (movie) => {
+        if (movie.imdbID) return movie;
+        const imdbID = await fetchImdbID(movie.tmdbID, movie.Type);
+        return { ...movie, imdbID: imdbID || `tmdb_${movie.tmdbID}` };
+      })
+    );
+
+    return resolved;
   } catch (error) {
     console.error('Person credits error:', error);
     toast.error('Connection failed. Check your internet.');
@@ -206,12 +227,15 @@ export async function getPersonCredits(tmdbID) {
 /**
  * Convert TMDB movie/show result to OMDb-compatible shape
  * so MovieCard and other components work without any changes
+ * NOTE: imdb_id is NOT available in search results — needs separate call
+ * We store tmdbID so we can fetch imdb_id when needed
  */
 function convertTMDBToOMDb(item) {
   const isTV = item.media_type === 'tv' || item.first_air_date;
 
   return {
-    imdbID: item.imdb_id || `tmdb_${item.id}`,
+    imdbID: item.imdb_id || null, // null until resolved via external_ids
+    tmdbID: item.id,              // always available, used as fallback key
     Title: item.title || item.name || 'Unknown',
     Year: (item.release_date || item.first_air_date || '').slice(0, 4),
     Type: isTV ? 'series' : 'movie',
@@ -219,4 +243,26 @@ function convertTMDBToOMDb(item) {
       ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
       : 'N/A',
   };
+}
+
+/**
+ * Fetch the IMDb ID for a TMDB movie or show
+ * TMDB search results don't include imdb_id — need separate call
+ * @param {number} tmdbID
+ * @param {string} type - 'movie' or 'tv'
+ * @returns {Promise<string|null>}
+ */
+async function fetchImdbID(tmdbID, type) {
+  try {
+    const endpoint = type === 'series' ? 'tv' : 'movie';
+    const response = await fetch(
+      `${BASE_URL}/${endpoint}/${tmdbID}/external_ids`,
+      options
+    );
+    if (!response.ok) return null;
+    const data = await response.json();
+    return data.imdb_id || null;
+  } catch {
+    return null;
+  }
 }

@@ -28,7 +28,7 @@ function Search() {
   const savedState = getSavedState();
   const [movies, setMovies] = useState(savedState.movies);
   const [loading, setLoading] = useState(savedState.movies.length === 0);
-  const [people, setPeople] = useState([]);
+  const [people, setPeople] = useState(savedState.people || []);
   const [query, setQuery] = useState(savedState.query);
 
   // Load random movies on mount only if no saved state

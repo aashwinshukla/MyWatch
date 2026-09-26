@@ -36,7 +36,11 @@ function PersonDetail() {
   }, [tmdbID]);
 
   if (loading) return <LoadingSpinner />;
-  if (!person) return <LoadingSpinner />;
+  if (!person) return (
+    <PageWrapper>
+      <div className="text-zinc-400 text-center mt-20">Person not found.</div>
+    </PageWrapper>
+  );
 
   return (
     <PageWrapper>
