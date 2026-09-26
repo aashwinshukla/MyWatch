@@ -125,7 +125,35 @@ Both APIs are free tier. Rate limits apply.
 
 ## Screenshots
 
-> Coming soon
+### Desktop
+
+| Home | Search |
+|------|--------|
+| ![Home page](./screenshots/home.png) | ![Search page](./screenshots/search.png) |
+
+| Watchlist | Person Page |
+|-----------|-------------|
+| ![Watchlist](./screenshots/watchlist.png) | ![Actor page](./screenshots/pc-actor-title.png) |
+
+| Title Detail — Harry Potter | Title Detail — Harry Potter 2 |
+|-----------------------------|-------------------------------|
+| ![Harry Potter detail 1](./screenshots/harrypotter-des1.png) | ![Harry Potter detail 2](./screenshots/harrypotter-des2.png) |
+
+| Title Detail — World War Z | Title Detail — Never Have I Ever |
+|----------------------------|----------------------------------|
+| ![World War Z detail](./screenshots/wwz-des.png) | ![Never Have I Ever detail](./screenshots/nhie-des.png) |
+
+---
+
+### Mobile
+
+| Home | Menu | Person Search |
+|------|------|---------------|
+| ![Mobile home](./screenshots/mobile-home.png) | ![Mobile menu](./screenshots/mobile-options.png) | ![Mobile actor search](./screenshots/mobile-actor.png) |
+
+| Person Detail | Title Detail |
+|---------------|--------------|
+| ![Will Smith mobile](./screenshots/will-smith-mobile-des.png) | ![I Am Legend mobile](./screenshots/i-am-legend-mob-des.png) |
 
 ---
 
